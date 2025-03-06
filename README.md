@@ -24,7 +24,7 @@ Copyright (c) 2023, University of Liverpool.
 
 Latest source code can be cloned with:
 ```bash
-git clone https://github.com/DiscreteVariablesTaskForce/DiscreteSamplingFramework.git --recursive
+git clone https://github.com/Juan3214/ACS-SMC.git --recursive
 cd DiscreteSamplingFramework
 ```
 Package requirements can be installed with:
