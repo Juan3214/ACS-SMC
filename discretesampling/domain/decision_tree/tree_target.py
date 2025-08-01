@@ -17,10 +17,10 @@ class TreeTarget(DiscreteVariableTarget):
         # call test tree to calculate Π(Y_i|T,theta,x_i)
         target1, leafs_possibilities_for_prediction = calculate_leaf_occurences(x)
         # call test tree to calculate  (theta|T)
-        #target2 = self.features_and_threshold_probabilities(x,heuristic)
+        target2 = self.features_and_threshold_probabilities(x,heuristic)
         # p(T) # remove target 2 and 3 for expermients 
         target3 = self.evaluatePrior(x)
-        return target1 + target3
+        return target1 + target3 +target3
 
     # (theta|T)
     def features_and_threshold_probabilities(self, x, continuous_thresholds = True, verbose = False):
@@ -43,8 +43,10 @@ class TreeTarget(DiscreteVariableTarget):
         
         for node in x.tree: # the root node can also change (but not be removed)
             lp = -math.log(fshape[1]) # choice of feature at this node
+            relevant = x.X_train[:, node[3]]
+            if max(relevant) - min(relevant) == 0:
+                continuous_thresholds=False
             if continuous_thresholds: # choice of threshold at this node
-                relevant = x.X_train[:, node[3]]
                 lp -= math.log(max(relevant) - min(relevant))
             else:
                 lp -= math.log(fshape[0])
@@ -69,7 +71,13 @@ class TreeTarget(DiscreteVariableTarget):
         # From 'A Bayesian CART algorithm' -  Densison et al. 1998
         lam = self.a
         k = len(x.leafs)
-        logprior = math.log(math.pow(lam, k) / ((math.exp(lam)-1) * math.factorial(k)))
+        try:
+            if k <= 170:
+                logprior = math.log(math.pow(lam, k) / ((math.exp(lam)-1) * math.factorial(k)))
+            else:
+                logprior = math.log(math.pow(lam, 170) / ((math.exp(lam)-1) * math.factorial(170)))
+        except OverflowError:
+            print("Overflow in ",k)
 
         return logprior
 

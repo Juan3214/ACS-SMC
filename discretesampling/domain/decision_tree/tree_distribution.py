@@ -6,7 +6,8 @@ from discretesampling.base.types import DiscreteVariableProposal
 
 
 class TreeProposal(DiscreteVariableProposal):
-    def __init__(self, moves_prob=[0.4, 0.001, 0.1, 0.5]):
+    def __init__(self,moves_prob=[0.2499, 0.001, 0.25, 0.5] ):
+    # or moves_prob=[0.2499, 0.001, 0.5, 0.25] 
         self.moves_prob = moves_prob  # good for Poisson and heart l = 12, and diabetes l = 10
     @classmethod
     def norm(self, tree):
@@ -40,8 +41,8 @@ class TreeProposal(DiscreteVariableProposal):
         moves_prob = self.moves_prob
         if len(start_tree.tree) == 1:
             moves_prob = [0.0, 0.0, 0.5, 0.5]
-        elif len(start_tree.tree) >= num_nodes:
-            moves_prob = [0.2, 0.0, 0.8, 0.0]
+        #elif len(start_tree.tree) >= num_nodes:
+        #    moves_prob = [0.2, 0.0, 0.8, 0.0]
         random_number = rng.random()
         moves_probabilities = np.cumsum(moves_prob)
         newTree = copy.copy(start_tree)
