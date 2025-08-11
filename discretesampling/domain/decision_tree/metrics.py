@@ -16,7 +16,10 @@ class stats():
         # From 'A Bayesian CART algorithm' -  Densison et al. 1998
         lam = a
         k = len(x.leafs)
-        logprior = math.log(math.pow(lam, k) / ((math.exp(lam)-1) * math.factorial(k)))
+        if k<=170:
+            logprior = math.log(math.pow(lam, k) / ((math.exp(lam)-1) * math.factorial(k)))
+        else:
+            logprior = math.log(math.pow(lam, 170) / ((math.exp(lam)-1) * math.factorial(170)))
 
         return logprior
     def getLeafPossibilities(self, x):

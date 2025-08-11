@@ -20,7 +20,7 @@ class TreeTarget(DiscreteVariableTarget):
         target2 = self.features_and_threshold_probabilities(x,heuristic)
         # p(T) # remove target 2 and 3 for expermients 
         target3 = self.evaluatePrior(x)
-        return target1 + target3 +target3
+        return target1 + target3 +target2
 
     # (theta|T)
     def features_and_threshold_probabilities(self, x, continuous_thresholds = True, verbose = False):
