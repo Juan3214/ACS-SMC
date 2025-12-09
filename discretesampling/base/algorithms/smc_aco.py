@@ -150,7 +150,7 @@ class DiscreteVariableSMC_ACO():
                     reverse_logprob = Lkernel.eval(i)
                 else:
                     Lkernel = self.Lkernel
-                    reverse_logprob = Lkernel.eval(new_particles[i], current_particles[i],heuristic,1)
+                    reverse_logprob = Lkernel.eval(new_particles[i], current_particles[i],0,1) # Changing second to last arg from heuristic to 0 to have L=q_{U} as L-kernel
 
                 current_target_logprob = self.target.eval(current_particles[i],heuristic)
                 new_target_logprob = self.target.eval(new_particles[i],heuristic)
